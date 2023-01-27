@@ -1,0 +1,4 @@
+-- CREATE DATABASE IF NO EXISTS tomydb
+
+SELECT 'CREATE DATABASE tomydb'
+WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = 'tomydb')\gexec
