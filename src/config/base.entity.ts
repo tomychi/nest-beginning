@@ -4,6 +4,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
+// para mantener los atributes en comunes (las abstractas no se pueden heredar)
 export abstract class BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
