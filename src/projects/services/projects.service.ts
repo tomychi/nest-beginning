@@ -23,6 +23,7 @@ export class ProjectsService {
   public async findProjects(): Promise<ProjectsEntity[]> {
     try {
       const projects: ProjectsEntity[] = await this.projectRepository.find();
+
       if (projects.length === 0) {
         throw new ErrorManager({
           type: 'BAD_REQUEST',
