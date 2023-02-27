@@ -3,7 +3,7 @@ import { UsersService } from '../../users/services/users.service';
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
 import { UsersEntity } from '../../users/entities/users.entity';
-import { PayloadToken } from '../interfaces/auth.interface';
+import { PayloadToken, AuthResponse } from '../interfaces/auth.interface';
 
 @Injectable()
 export class AuthService {
@@ -42,7 +42,7 @@ export class AuthService {
     return jwt.sign(payload, secret, { expiresIn: expires });
   }
 
-  public async generateJWT(user: UsersEntity): Promise<any> {
+  public async generateJWT(user: UsersEntity): Promise<AuthResponse> {
     const getUser = await this.userService.findUserById(user.id);
 
     const payload: PayloadToken = {

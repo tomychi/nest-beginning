@@ -10,6 +10,7 @@
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "export NODE_ENV=develop && nest start --watch",
+    "start:dev-windows": "set NODE_ENV=develop && nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
@@ -20,7 +21,9 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "orm:init": "typeorm-ts-node-esm -d ./src/config/data.source.ts",
     "m:gen": "export NODE_ENV=develop && npm run orm:init migration:generate",
-    "m:run": "export NODE_ENV=develop && npm run orm:init migration:run"
+    "m:run": "export NODE_ENV=develop && npm run orm:init migration:run",
+    "m:gen-windows": "set NODE_ENV=develop && npm run orm:init migration:generate",
+    "m:run-windows": "set NODE_ENV=develop && npm run orm:init migration:run"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",
