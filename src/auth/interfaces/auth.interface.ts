@@ -1,4 +1,4 @@
-import { ROLES } from '../../interfaces/roles';
+import { ROLES } from '../../constants/roles';
 import { UsersEntity } from '../../users/entities/users.entity';
 export interface PayloadToken {
   sub: string;
