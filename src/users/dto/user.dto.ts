@@ -6,7 +6,7 @@ import {
   IsString,
   IsUUID,
 } from 'class-validator';
-import { ACCESS_LEVEL, ROLES } from '../../interfaces/roles';
+import { ACCESS_LEVEL, ROLES } from '../../constants/roles';
 import { UsersEntity } from '../entities/users.entity';
 import { ProjectsEntity } from '../../projects/entities/projects.entity';
 
