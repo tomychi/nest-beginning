@@ -4,6 +4,7 @@ import {
   Delete,
   Get,
   Param,
+  ParseUUIDPipe,
   Post,
   Put,
   UseGuards,
@@ -14,17 +15,21 @@ import { PublicAccess } from '../../auth/decorators/public.decorator';
 import { AuthGuard } from '../../auth/guards/auth.guard';
 import { Roles } from '../../auth/decorators/roles.decorator';
 import { RolesGuard } from '../../auth/guards/roles.guard';
+import { AdminAccess } from 'src/auth/decorators/admin.decorator';
+import { ProjectsEntity } from '../../projects/entities/projects.entity';
 
 @Controller('users')
 @UseGuards(AuthGuard, RolesGuard)
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
+  @PublicAccess()
   @Post('register')
   public async registerUser(@Body() body: UserDTO) {
     return await this.usersService.createUser(body);
   }
 
+  @AdminAccess()
   @Roles('BASIC')
   @Get('all')
   public async findAllUsers() {
@@ -52,8 +57,14 @@ export class UsersController {
 
   // relaciones con projects
 
-  @Post('add-to-project')
-  public async addToProject(@Body() body: UserToProjectDTO) {
-    return await this.usersService.relationToProject(body);
+  @Post('add-to-project/:projectId')
+  public async addToProject(
+    @Body() body: UserToProjectDTO,
+    @Param('projectId', new ParseUUIDPipe()) id: string,
+  ) {
+    return await this.usersService.relationToProject({
+      ...body,
+      project: id as unknown as ProjectsEntity,
+    });
   }
 }

@@ -7,13 +7,13 @@ import {
 import { Reflector } from '@nestjs/core';
 import { Request } from 'express';
 import {
+  ACCESS_LEVEL_KEY,
+  ADMIN_KEY,
   PUBLIC_KEY,
   ROLES_KEY,
-  ADMIN_KEY,
 } from '../../constants/key-decorators';
 import { ROLES } from '../../constants/roles';
 import { UsersService } from '../../users/services/users.service';
-import { ACCESS_LEVEL_KEY } from '../../constants/key-decorators';
 
 @Injectable()
 export class AccessLevelGuard implements CanActivate {
@@ -62,7 +62,7 @@ export class AccessLevelGuard implements CanActivate {
       }
     }
 
-    if (roleUser === ROLES.ADMIN) {
+    if (roleUser === ROLES.ADMIN || roleUser === ROLES.CREATOR) {
       return true;
     }
 
