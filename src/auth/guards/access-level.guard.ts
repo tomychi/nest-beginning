@@ -12,7 +12,7 @@ import {
   PUBLIC_KEY,
   ROLES_KEY,
 } from '../../constants/key-decorators';
-import { ROLES } from '../../constants/roles';
+import { ACCESS_LEVEL, ROLES } from '../../constants/roles';
 import { UsersService } from '../../users/services/users.service';
 
 @Injectable()
@@ -40,7 +40,7 @@ export class AccessLevelGuard implements CanActivate {
       context.getHandler(),
     );
 
-    const accessLevel = this.reflector.get<number>(
+    const accessLevel = this.reflector.get<keyof typeof ACCESS_LEVEL>(
       ACCESS_LEVEL_KEY,
       context.getHandler(),
     );
@@ -76,7 +76,12 @@ export class AccessLevelGuard implements CanActivate {
       throw new UnauthorizedException('No formas parte del proyecto');
     }
 
-    if (accessLevel !== userExistInProject.accessLevel) {
+    // DEVELOPER = 30
+    // MANTEINER = 40
+    // OWNER = 30
+
+    // 30 > 40
+    if (ACCESS_LEVEL[accessLevel] > userExistInProject.accessLevel) {
       throw new UnauthorizedException('No tienes el nivel de acceso necesario');
     }
 
