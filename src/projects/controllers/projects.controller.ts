@@ -17,6 +17,7 @@ import { AccessLevelGuard } from '../../auth/guards/access-level.guard';
 import { AccessLevel } from '../../auth/decorators/access-level.decorator';
 import { Roles } from 'src/auth/decorators/roles.decorator';
 import { ApiParam, ApiTags } from '@nestjs/swagger';
+import { PublicAccess } from 'src/auth/decorators/public.decorator';
 
 @ApiTags('Projects')
 @Controller('projects')
@@ -49,6 +50,12 @@ export class ProjectsController {
     @Param('projectId', new ParseUUIDPipe()) id: string,
   ) {
     return await this.projectService.findProjectById(id);
+  }
+
+  @PublicAccess()
+  @Get('list/api')
+  public async listApi() {
+    return this.projectService.listApi();
   }
 
   @ApiParam({

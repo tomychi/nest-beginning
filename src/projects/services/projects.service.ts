@@ -7,6 +7,7 @@ import { ProjectsEntity } from '../entities/projects.entity';
 import { UsersProjectsEntity } from '../../users/entities/usersProjects.entity';
 import { ACCESS_LEVEL } from '../../constants/roles';
 import { UsersService } from '../../users/services/users.service';
+import { HttpCustomService } from '../../providers/http/http.service';
 
 @Injectable()
 export class ProjectsService {
@@ -18,6 +19,8 @@ export class ProjectsService {
     private readonly usersProjectRepository: Repository<UsersProjectsEntity>,
 
     private readonly usersService: UsersService,
+
+    private readonly httpService: HttpCustomService,
   ) {}
 
   public async createProject(body: ProjectDTO, userId: string): Promise<any> {
@@ -35,6 +38,10 @@ export class ProjectsService {
     } catch (error) {
       throw ErrorManager.createSignatureError(error.message);
     }
+  }
+
+  public async listApi() {
+    return this.httpService.apiFindAll();
   }
 
   public async findProjects(): Promise<ProjectsEntity[]> {
